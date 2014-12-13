@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>札幌市立小学校　学級閉鎖状況</title>
+<style type="text/css">
+body {background-color: black;}
+
+#date_selected {
+	background-color: black;
+	text-align:center;
+}
+
+#flu_map {
+	text-align: center;
+}
+
+.railway {
+	stroke: white;
+	stroke-width: 2;
+	stroke-opacity: 1.0;
+}
+
+.railway.南北線 {
+	stroke: green;
+	stroke-width: 2;
+	stroke-opacity: 1.0;
+}
+
+.railway.東西線 {
+	stroke: orange;
+	stroke-width: 2;
+	stroke-opacity: 1.0;
+}
+
+.railway.東豊線 {
+	stroke: blue;
+	stroke-width: 2;
+	stroke-opacity: 1.0;
+}
+
+.headings {
+	color:white;
+	text-align: center;
+}
+
+a:link {
+	color:yellow;
+};
+
+a:visited {
+    color:orange;
+}
+
+.description {
+	color: white;
+	font-size: 14px;
+	text-align: center;
+}
+.date_str {
+	font-weight: bold;
+	font-size:20px;
+	color: lime;
+}
+
+.date_arrow {
+	background-color: black;
+	font-weight:bold;
+	font-size:20px;
+	color: red;
+}
+
+.tooltip {
+	border: 1px solid blue;
+	background-color: white;
+	padding: 10px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+#explain {
+	position: absolute;
+	top:160px;
+	left:10px;
+	width:200px;
+	background-color: gray;
+	color: white;
+	font-size:10px;
+}
+</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+<script src="http://d3js.org/topojson.v0.min.js"></script>
+<script src="./school_flu.js"></script>
+</head>
+<body onload="initialize()">
+<h2 class="headings">札幌市立小学校　学級閉鎖状況</h2>
+<p class="description">下記のデータは，札幌市ホームページ「<a href="http://www.city.sapporo.jp/hokenjo/f1kansen/f003influ-kyugyo.html">インフルエンザの発生動向と市立学校等の学級閉鎖等情報</a>」で公開されている，<br/>市立学校の学級閉鎖等情報のデータを基にしています。
+
+<table id="date_selected" align="center">
+<tr>
+<td class="date_arrow" id="PrevDay"> − </td>
+<td class="date_str" id="viewDate">----/--/--</td>
+<td class="date_arrow" id="NextDay">＋</td>
+</table>
+
+<div id="flu_map"></div>
+
+<div id="explain">
+<p>エリアにカーソルを重ねると学校名，人数が表示されます。<br/><br/>マウスボタンをダブルクリックすると地図が拡大します。シフトキーを押しながらダブルクリックすると縮小します。<br/><br/>マウスをドラッグすると地図が移動します。<br/><br/>日付の横のー＋をクリックすると日付が変わります。</p>
+</div>
+
+<p class="description">本ページに関する問い合わせは<a href="mailto:endo@meme.hokudai.ac.jp">北海道大学　知識メディアラボ</a>までお願いします。</p>
+<p class="description">学区のデータは<a href="http://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A27.html">国土数値情報 小学校区データ</a>を利用しています。</p>
+</body>
+</html>
