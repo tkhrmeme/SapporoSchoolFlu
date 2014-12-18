@@ -19,6 +19,8 @@ var zoom;
 
 var csvData;
 var infulsData;
+var numOfElmSchool;
+var numOfJhSchool;
 var dateFileList;
 
 var viewDate;
@@ -139,6 +141,20 @@ function loadInfulsData(dayNumber)
 				csvData = data;	//CSVデータ
 
 				var infulsData = aggregateInfuls(csvData);	// 学校毎に在籍数を集計する
+
+				numOfElmSchool = 0;
+				numOfJhSchool = 0;
+				
+				var schoolList = Object.keys(infulsData);
+				schoolList.forEach(function(value) {
+					var n = value.length;
+					 if(value.substring(n-3) == '小学校') {
+						numOfElmSchool++;
+					 } else {
+					 	numOfJhSchool++;
+					 }
+				});
+				d3.select('#NumOfSchool').text("        学校数 "+numOfElmSchool);
 
 				d3.selectAll(".school")
 					.on("mouseover", function(d) {tooltip.style("visibility","visible");})
