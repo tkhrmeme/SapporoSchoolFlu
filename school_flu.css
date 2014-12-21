@@ -55,7 +55,7 @@ a:visited { color:orange; }
 .date_arrow {
 	background-color: black;
 	font-weight:bold;
-	font-size:20px;
+	font-size:12px;
 	color: red;
 }
 
@@ -68,11 +68,5 @@ a:visited { color:orange; }
 }
 
 #explain {
-	position: absolute;
-	top:160px;
-	left:10px;
-	width:200px;
-	background-color: gray;
-	color: white;
-	font-size:10px;
+	font-size:12px;
 }

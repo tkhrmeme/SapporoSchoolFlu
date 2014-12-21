@@ -229,14 +229,11 @@ function initHtmlElements()
 		.style("z-index","10")
 		.style("visibility","hidden");
 
-	d3.select("#PrevDay")
-		.on("click", function(d) {
-			changeDay(DayDecrement);
-		});
-
-	d3.select("#NextDay")
-		.on("click", function(d) {
-			changeDay(DayIncrement);
-		});
+	$("#prev_day_button").mousedown(function(d) {
+		changeDay(DayDecrement);
+	});
+	$("#next_day_button").mousedown(function(d) {
+		changeDay(DayIncrement);
+	});
 }
 

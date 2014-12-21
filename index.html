@@ -4,10 +4,35 @@
 <meta charset="utf-8">
 <title>札幌市立小学校　学級閉鎖状況</title>
 <link rel="stylesheet" href="school_flu.css" type="text/css"></link>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/mint-choc/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
 <script src="http://d3js.org/topojson.v0.min.js"></script>
 <script src="./school_flu.js"></script>
+<script>
+	$(function() {
+		$("#explain").dialog({
+			width:240,
+			position: {my:"left top", at:"left bottom"}
+		});
+	});
+
+	$(function() {
+		$("#prev_day_button").button({
+			label: '前日',
+			icons: { primary: "ui-icon-minusthick" }
+		});
+	});
+
+	$(function() {
+		$("#next_day_button").button({
+			label: '翌日',
+			icons: { primary: "ui-icon-plusthick" }
+		});
+	});
+</script>
 </head>
 <body onload="initialize()">
 <h2 class="headings">札幌市立小学校　学級閉鎖状況</h2>
@@ -15,15 +40,15 @@
 
 <table id="date_selected" align="center">
 <tr>
-<td class="date_arrow" id="PrevDay"> − </td>
+<td class="date_arrow"><div id="prev_day_button"></div></td>
 <td class="date_str" id="viewDate">----/--/--</td>
-<td class="date_arrow" id="NextDay">＋</td>
+<td class="date_arrow"><div id="next_day_button"></div></td>
 <td  class="date_str" id="NumOfSchool"></td>
 </table>
 
 <div id="flu_map"></div>
 
-<div id="explain">
+<div id="explain" title="使い方">
 <p>エリアにカーソルを重ねると学校名，人数が表示されます。<br/><br/>マウスボタンをダブルクリックすると地図が拡大します。シフトキーを押しながらダブルクリックすると縮小します。<br/><br/>マウスをドラッグすると地図が移動します。<br/><br/>日付の横のー＋をクリックすると日付が変わります。</p>
 </div>
 
