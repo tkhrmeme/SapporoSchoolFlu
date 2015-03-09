@@ -22,6 +22,7 @@ var infulsData;
 var numOfElmSchool;
 var numOfJhSchool;
 var dateFileList;
+var dateIndex = 0;
 
 var viewDate;
 var dateFormat = d3.time.format("%Y/%m/%d");
@@ -54,11 +55,11 @@ function initialize()
 	d3.csv("DateFileList.csv", function(error, data) {
 		dateFileList = data;
 
-		viewDate = new Date( dateFileList[0].Date);
+		viewDate = new Date( dateFileList[dateIndex].Date);
 		
 		d3.select("#viewDate").text(dateFormat(viewDate));
 
-		loadInfulsData(dateFileList[0].File);
+		loadInfulsData(dateFileList[dateIndex].File);
 	});
 }
 
@@ -192,31 +193,19 @@ function initBehavior()
 	svg.call(zoom);
 }
 
-function findFileName(dayStr)
-{
-	for(i=0; i < dateFileList.length; i++) {
-		if(dayStr == dateFileList[i].Date) {
-			return dateFileList[i].File;
-		}
-	}
-
-	return null;
-}
-
-//日付を前後１日単位で変更する
+//日付を前後に変更する
 function changeDay(dayInc)
 {
-	var t = viewDate.getTime();
-	t += dayInc * 60 * 60 * 24 *1000;
-	var newDate = new Date(t);
-	var dayStr = dateFormat(newDate);
-	var file = findFileName(dayStr);
-	if(file != null) {
-		loadInfulsData(file);
+	var newIndex = dateIndex - dayInc;
 
-		viewDate = newDate;
+	if((newIndex >= 0) & (newIndex < dateFileList.length)) {
+		dateIndex = newIndex;
 
-		d3.select("#viewDate").text(dayStr);
+		viewDate = new Date(dateFileList[dateIndex].Date);
+
+		d3.select("#viewDate").text(dateFormat(viewDate));
+
+		loadInfulsData(dateFileList[dateIndex].File);
 	}
 }
 
