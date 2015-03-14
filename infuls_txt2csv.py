@@ -92,13 +92,15 @@ def mainProcess(fin, fout, annual):
     if data:
         processData(fout, data, annual)
         
-if __name__ == "__main__":
+if __name__ == "__main__":    
     workPath = os.path.abspath(sys.argv[0])
+    path, file = os.path.split(workPath)
+    print("Current Working Path : " + path)
     
     # 日付と変換済ファイルの対応リスト
     dateFileList = []
     
-    dflPath = os.path.join(workPath, 'DateFileList.csv')
+    dflPath = os.path.join(path, 'DateFileList.csv')
     if os.path.isfile(dflPath):
         fp = open(dflPath,'rb')
         reader = csv.reader(fp)
@@ -107,9 +109,12 @@ if __name__ == "__main__":
         del(dateFileList[0])
         fp.close()
     else:
-        exit()
-
-    csvPath = os.path.join(workPath, '_csv')
+        print("DateFileList not found.")
+        exit
+        
+    csvPath = os.path.join(path, '_csv')
+    print("CSV path : " + csvPath)
+    
     # ディレクトリ内のファイル
     files = os.listdir(csvPath)
     
@@ -126,9 +131,11 @@ if __name__ == "__main__":
             # 変換済みでなければ    
             if not found:
                 path = os.path.join(csvPath, fname +'.txt')
+                print("TXT : " + path)
                 fin = open(path, 'r')
 
                 path = os.path.join(csvPath, fname +'.csv')
+                print("CSV : " + path)
                 fout = open(path, 'w')
                 
                 fout.write("City,School,Address,Type,Start,End,Grade,Count\n")
