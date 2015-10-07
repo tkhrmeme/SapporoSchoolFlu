@@ -27,7 +27,12 @@ var dateIndex = 0;
 var viewDate;
 var dateFormat = d3.time.format("%Y/%m/%d");
 
+var url_ElementarySchool = "_json/elm_school_area.topojson"
+var url_Railway = "_json/railway.topojson"
+
+var DEBUG = 1;
 //
+url_ElementarySchool = "_json/SapporoElementarySchool.topojson"
 
 function initialize() 
 {
@@ -65,7 +70,7 @@ function initialize()
 
 function loadSubwayData()
 {
-	d3.json("_json/railway.topojson", function(error, data) {
+	d3.json(url_Railway, function(error, data) {
 		var railway = topojson.object(data, data.objects.railway);
 
 		path_railway= d3.geo.path().projection(projection);
@@ -83,7 +88,7 @@ function loadSubwayData()
 // topojsonデータの読み込み。
 function loadSchoolAreaData()
 {
-	d3.json("_json/elm_school_area.topojson", function(error, data) {
+	d3.json(url_ElementarySchool, function(error, data) {
 		var school = topojson.object(data, data.objects.schoolArea);
 
 		path_elm_school = d3.geo.path().projection(projection);
@@ -198,6 +203,10 @@ function changeDay(dayInc)
 {
 	var newIndex = dateIndex - dayInc;
 
+	if (DEBUG) {
+		console.log("changeDay" +dayInc);
+	}
+	
 	if((newIndex >= 0) & (newIndex < dateFileList.length)) {
 		dateIndex = newIndex;
 
