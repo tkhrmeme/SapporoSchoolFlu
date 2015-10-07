@@ -24,10 +24,27 @@ var numOfJhSchool;
 var dateFileList;
 var dateIndex = 0;
 
+var intervalId = 0;
+
 var viewDate;
 var dateFormat = d3.time.format("%Y/%m/%d");
 
+var url_railway = "_json/railway.topojson";
+var url_schoolarea = "_json/ElementarySchool.topojson";
+
+var DEBUG = 0;
+
 //
+function showData(index)
+{
+	dateIndex = index;
+
+	viewDate = new Date( dateFileList[dateIndex].Date);
+		
+	d3.select("#viewDate").text(dateFormat(viewDate));
+
+	loadInfulsData(dateFileList[dateIndex].File);
+}
 
 function initialize() 
 {
@@ -42,6 +59,7 @@ function initialize()
 		.range(["#ffcccc", "#FF0000"]);
 
 	projection = d3.geo.mercator()
+	//projection = d3.geo.azimuthalEqualArea()
 			.center(initialMapCenter)
 			.translate([svgWidth / 2, svgHeight / 2])
 			.scale(initialMapScale);
@@ -55,17 +73,17 @@ function initialize()
 	d3.csv("DateFileList.csv", function(error, data) {
 		dateFileList = data;
 
-		viewDate = new Date( dateFileList[dateIndex].Date);
-		
-		d3.select("#viewDate").text(dateFormat(viewDate));
-
-		loadInfulsData(dateFileList[dateIndex].File);
+		showData(0);
 	});
 }
 
 function loadSubwayData()
 {
-	d3.json("_json/railway.topojson", function(error, data) {
+	d3.json(url_railway, function(error, data) {
+		if (DEBUG) {
+			console.log(data.objects);
+		}
+
 		var railway = topojson.object(data, data.objects.railway);
 
 		path_railway= d3.geo.path().projection(projection);
@@ -83,7 +101,11 @@ function loadSubwayData()
 // topojsonデータの読み込み。
 function loadSchoolAreaData()
 {
-	d3.json("_json/elm_school_area.topojson", function(error, data) {
+	d3.json(url_schoolarea, function(error, data) {
+		if (DEBUG) {
+			console.log(data.objects);
+		}
+
 		var school = topojson.object(data, data.objects.schoolArea);
 
 		path_elm_school = d3.geo.path().projection(projection);
@@ -196,17 +218,17 @@ function initBehavior()
 //日付を前後に変更する
 function changeDay(dayInc)
 {
+	if (DEBUG) {
+		console.log("changeDay " +dayInc);
+	}
+
 	var newIndex = dateIndex - dayInc;
 
 	if((newIndex >= 0) & (newIndex < dateFileList.length)) {
-		dateIndex = newIndex;
-
-		viewDate = new Date(dateFileList[dateIndex].Date);
-
-		d3.select("#viewDate").text(dateFormat(viewDate));
-
-		loadInfulsData(dateFileList[dateIndex].File);
+		showData(newIndex);
 	}
+
+	return dateIndex;
 }
 
 function initHtmlElements()
@@ -221,8 +243,41 @@ function initHtmlElements()
 	$("#prev_day_button").mousedown(function(d) {
 		changeDay(DayDecrement);
 	});
+
 	$("#next_day_button").mousedown(function(d) {
 		changeDay(DayIncrement);
 	});
+
+	$("#animation_button").mousedown(function(d) {
+		controlAnimation();
+	});
 }
 
+function controlAnimation()
+{
+	if (DEBUG) {
+		console.log("controlAnimation " +intervalId);
+	}
+
+	if (intervalId == 0) {
+		showData(dateFileList.length -1);
+
+		$("#animation_button").text("停止");
+		$("#prev_day_button").hide();
+		$("#next_day_button").hide();
+
+		intervalId = setInterval("animationUpdate()", 1000);
+	} else {
+		clearInterval(intervalId);
+		intervalId = 0;
+
+		$("#animation_button").text("自動再生");
+		$("#prev_day_button").show();
+		$("#next_day_button").show();
+	}
+}
+
+function animationUpdate()
+{
+	changeDay(DayIncrement);
+}
