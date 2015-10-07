@@ -17,18 +17,19 @@
 			width:240,
 			position: {my:"left top", at:"left bottom"}
 		});
-	});
 
-	$(function() {
 		$("#prev_day_button").button({
 			label: '前日',
 			icons: { primary: "ui-icon-minusthick" }
 		});
-	});
 
-	$(function() {
 		$("#next_day_button").button({
 			label: '翌日',
+			icons: { primary: "ui-icon-plusthick" }
+		});
+
+		$("#animation_button").button({
+			label: '自動再生',
 			icons: { primary: "ui-icon-plusthick" }
 		});
 	});
@@ -40,10 +41,11 @@
 
 <table id="date_selected" align="center">
 <tr>
-<td class="date_arrow"><div id="prev_day_button"></div></td>
-<td class="date_str" id="viewDate">----/--/--</td>
-<td class="date_arrow"><div id="next_day_button"></div></td>
-<td  class="date_str" id="NumOfSchool"></td>
+<td class="ui_component"><div id="animation_button"></div></td>
+<td class="ui_component"><div id="prev_day_button"></div></td>
+<td class="ui_str" id="viewDate">----/--/--</td>
+<td class="ui_component"><div id="next_day_button"></div></td>
+<td class="ui_str" id="NumOfSchool"></td>
 </table>
 
 <div id="flu_map"></div>
