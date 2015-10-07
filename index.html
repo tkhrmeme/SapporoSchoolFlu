@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>札幌市立小学校　学級閉鎖状況 (2014-15年度）</title>
+<title>札幌市立小学校　学級閉鎖状況（2014-15シーズン）</title>
 <link rel="stylesheet" href="school_flu.css" type="text/css"></link>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/mint-choc/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
@@ -17,33 +17,35 @@
 			width:240,
 			position: {my:"left top", at:"left bottom"}
 		});
-	});
 
-	$(function() {
 		$("#prev_day_button").button({
 			label: '前日',
 			icons: { primary: "ui-icon-minusthick" }
 		});
-	});
 
-	$(function() {
 		$("#next_day_button").button({
 			label: '翌日',
+			icons: { primary: "ui-icon-plusthick" }
+		});
+
+		$("#animation_button").button({
+			label: '自動再生',
 			icons: { primary: "ui-icon-plusthick" }
 		});
 	});
 </script>
 </head>
 <body onload="initialize()">
-<h2 class="headings">札幌市立小学校　学級閉鎖状況（2014-15年度）</h2>
+<h2 class="headings">札幌市立小学校　学級閉鎖状況（2014-15シーズン）</h2>
 <p class="description">下記のデータは，札幌市ホームページ「<a href="http://www.city.sapporo.jp/hokenjo/f1kansen/f003influ-kyugyo.html">インフルエンザの発生動向と市立学校等の学級閉鎖等情報</a>」で公開されている，<br/>市立学校の学級閉鎖等情報のデータを基にしています。
 
 <table id="date_selected" align="center">
 <tr>
-<td class="date_arrow"><div id="prev_day_button"></div></td>
-<td class="date_str" id="viewDate">----/--/--</td>
-<td class="date_arrow"><div id="next_day_button"></div></td>
-<td  class="date_str" id="NumOfSchool"></td>
+<td class="ui_component"><div id="animation_button"></div></td>
+<td class="ui_component"><div id="prev_day_button"></div></td>
+<td class="ui_str" id="viewDate">----/--/--</td>
+<td class="ui_component"><div id="next_day_button"></div></td>
+<td class="ui_str" id="NumOfSchool"></td>
 </table>
 
 <div id="flu_map"></div>
